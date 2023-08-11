@@ -102,11 +102,13 @@ async def negotiate(bot: Bot, message: types.Message, users_: dict, coinsc: int,
                 await bot.send_message(message.chat.id,
                                  'Вы не смогли договориться с полицией, вы просто потратили свои коины.',
                                  message_thread_id=message.message_thread_id)
+                print(f'Пользователь {callback.from_user.id} не смог договориться с полицией')
             else:
                 await bot.send_message(message.chat.id,
                                  'Вы успешно договорились с полицией, теперь ваша лягушка может работать полицейским, хоть и с зарплатой в 2 раза меньше!',
                                  message_thread_id=message.message_thread_id)
                 users_[str(callback.from_user.id)]['frog']['can_be_cop_after_thief'] = True
+                print(f'Пользователь {callback.from_user.id} договорился с полицией')
         else:
             await bot.send_message(message.chat.id,
                              'У вас недостаточно коинов!',

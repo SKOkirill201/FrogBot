@@ -16,6 +16,7 @@ async def main(bot: Bot, message: types.Message, users_: dict):
             await bot.send_message(message.chat.id, 'Хей! Вы не зарегистрированы в системе! Если хотите зарегистрироватся напишите "старт"', message_thread_id=message.message_thread_id)
         else:
             if users_[str(message.from_user.id)]['have_frog'] == False:
+                print(f'Пользователь {message.from_user.id} взял себе лягушку')
                 await bot.send_message(message.chat.id, 'Вы отправились в магазин питомцев, долго рассматривали огромную коллекцую из лягушек! Но наконец, выбрали самую лучшую! Теперь вы друзья! Осталось ей только имя дать!', message_thread_id=message.message_thread_id)
                 users_[str(message.from_user.id)]['have_frog'] = True
 

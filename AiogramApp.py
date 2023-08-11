@@ -65,17 +65,17 @@ async def ff_bug(callback: types.CallbackQuery):
 @dp.callback_query_handler(text = 'fb_nwtp_300c')
 async def ff_bug(callback: types.CallbackQuery):
     await negotiate(bot, callback.message, users_, 300, callback)
-    print(f'Пользователь {callback.from_user.id} попытался договориться с полицией')
+    print(f'Пользователь {callback.from_user.id} попытался договориться с полицией за 300 коинов')
 # 500 coins
 @dp.callback_query_handler(text = 'fb_nwtp_500c')
 async def ff_bug(callback: types.CallbackQuery):
     await negotiate(bot, callback.message, users_, 500, callback)
-    print(f'Пользователь {callback.from_user.id} попытался договориться с полицией')
+    print(f'Пользователь {callback.from_user.id} попытался договориться с полицией за 500 коинов')
 # 750 coins
 @dp.callback_query_handler(text = 'fb_nwtp_750c')
 async def ff_bug(callback: types.CallbackQuery):
     await negotiate(bot, callback.message, users_, 750, callback)
-    print(f'Пользователь {callback.from_user.id} попытался договориться с полицией')
+    print(f'Пользователь {callback.from_user.id} попытался договориться с полицией за 750 коинов')
 
 @dp.callback_query_handler(text = 'fb_w_office_worker')
 async def office_worker(callback: types.CallbackQuery):
@@ -83,6 +83,7 @@ async def office_worker(callback: types.CallbackQuery):
     if users_[str(callback.from_user.id)]['frog']['frog_on_work'] == False:
         if users_[str(callback.from_user.id)]['frog']['frog_satiety'] >= 1:
             if users_[str(callback.from_user.id)]['frog']['frog_in_jail'] == False:
+                print(f'Пользователь {callback.from_user.id} отправил лягушку на работу офисным работником')
                 await bot.send_message(message.chat.id, 
                                  '''Вы успешно отправили вашу лягушку на работу офисным работником 🐸! Пожелайте ей удачи 🍀!
 
@@ -95,6 +96,7 @@ async def office_worker(callback: types.CallbackQuery):
                 await sleep(180)
                 users_[str(callback.from_user.id)]['frog']['frog_satiety'] -= 1
                 if result == 'successful':
+                    print(f'Лягушка пользователя {callback.from_user.id} успешно провела рабочий день офисным работником.')
                     what_frog_do = choice(('составляя отчёты', 'настраивая программы клиентам'))
                     add = randint(100, 175)
                     if users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['player_has'] == True:
@@ -125,8 +127,10 @@ async def office_worker(callback: types.CallbackQuery):
                         text += f'\n - 💵 {add_r} коинов (Ранг)'
 
                 elif result == 'error':
+                    print(f'Лягушка пользователя {callback.from_user.id} совершила ошибку на работе офисным работником')
                     text = 'О нет! Ваша лягушка совершила ошибку и её уволили! Вы ничего не получили!'
                 elif result == 'escape':
+                    print(f'Лягушка пользователя {callback.from_user.id} сбежала с работы')
                     text = 'Ваша лягушка решила сбежать с работы... И у неё получилось! Вы ничего не получили.'
                 users_[str(callback.from_user.id)]['frog']['frog_on_work'] = False
                 await bot.send_message(message.chat.id,
@@ -157,6 +161,7 @@ async def robber(callback: types.CallbackQuery):
         if users_[str(callback.from_user.id)]['frog']['frog_satiety'] >= 1:
             if users_[str(callback.from_user.id)]['frog']['frog_in_jail'] == False:
                 users_[str(callback.from_user.id)]['frog']['has_been_thief'] = True
+                print(f'Пользователь {callback.from_user.id} отправил лягушку на работу грабителем')
                 await bot.send_message(message.chat.id,
                                  '''🔑 Вы успешно отправили вашу лягушку на работу грабителем! Вы сошли с ума?! Она же может попасть в тюрьму!
 
@@ -174,6 +179,7 @@ async def robber(callback: types.CallbackQuery):
                     if what_frog_robbed == 'дом': add = randint(150, 375)
                     if what_frog_robbed == 'банк': add = randint(375, 500)
                     if what_frog_robbed == 'музей': add = randint(475, 550)
+                    print(f'Лягушка пользователя {callback.from_user.id} успешно ограбила {what_frog_robbed}')
 
                     if users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['player_has'] == True:
                         addd = add * config['items_i']['lucky_coin'][str(users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['level'])]
@@ -209,6 +215,7 @@ async def robber(callback: types.CallbackQuery):
                     users_[str(callback.from_user.id)]['frog']['frog_in_jail'] = True
                     users_[str(callback.from_user.id)]['frog']['has_been_in_jail'] = True
                     users_[str(callback.from_user.id)]['frog']['can_be_cop_after_thief'] = False
+                    print(f'Лягушка пользователя {callback.from_user.id} попалась полиции')
                     text = 'О нет! Ваша лягушка попалась полиции и её посадили в тюрьму! 😱'
                 
                 users_[str(callback.from_user.id)]['frog']['frog_on_work'] = False
@@ -234,6 +241,7 @@ async def cleaner(callback: types.CallbackQuery):
     if users_[str(callback.from_user.id)]['frog']['frog_on_work'] == False:
         if users_[str(callback.from_user.id)]['frog']['frog_satiety'] >= 1:
             if users_[str(callback.from_user.id)]['frog']['frog_in_jail'] == False:
+                print(f'Пользователь {callback.from_user.id} отправил лягушку на работу уборщиком')
                 bot.reply_to(message, '''Вы успешно отправили вашу лягушку на работу уборщиком 🧹!
 
 🕔 Сообщение о результате рабочего дня придёт через 3 минуты.''',
@@ -271,6 +279,8 @@ async def cleaner(callback: types.CallbackQuery):
                         text += f'\n - 💵 {addd} коинов {item_name}'
                     if users_[str(callback.from_user.id)]['frog']['rank'] != 1:
                         text += f'\n - 💵 {add_r} коинов (Ранг)'
+                    
+                print(f'Лягушка пользователя {callback.from_user.id} успешно провела рабочий день уборщиком')
 
                 await bot.send_message(message.chat.id,
                                        text,

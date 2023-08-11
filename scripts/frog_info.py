@@ -4,6 +4,7 @@ from other.commands import all_commands
 async def frog_info_commands(bot: Bot, message: types.Message, users_: dict, config: dict):
     if str(message.text).lower() in all_commands['my_frog']:
         if users_[str(message.from_user.id)]['have_frog'] == True:
+            print(f'Пользователь {message.from_user.id} посмотрел информацию о своей лягушке')
             if message.from_user.username.lower() in ('', None, '@', 'none'):
                 user_frog = f'Ваша лягушка'
             else:
@@ -62,6 +63,7 @@ async def frog_info_commands(bot: Bot, message: types.Message, users_: dict, con
                             message_thread_id=message.message_thread_id)
 
     elif str(message.text).lower() in all_commands['my_balance']:
+        print(f'Пользователь {message.from_user.id} посмотрел свой баланс')
         money = users_[str(message.from_user.id)]['user']['money']
         rmoney = round(money)
         await bot.send_message(message.chat.id, 
@@ -74,6 +76,7 @@ async def frog_info_commands(bot: Bot, message: types.Message, users_: dict, con
         money = users_[str(idd)]['user']['money']
         rmoney = round(money)
         try:
+            print(f'Пользователь {message.from_user.id} посмотрел баланс пользователя {idd}')
             await bot.send_message(message.chat.id,
                                f'Баланс данного пользователя: {rmoney}',
                                message_thread_id=message.message_thread_id,

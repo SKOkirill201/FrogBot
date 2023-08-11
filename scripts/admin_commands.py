@@ -25,6 +25,7 @@ async def admin(bot: Bot, message: types.Message, users_: dict):
                     if key == 'money':
                         value = int(value)
                     users_[str(idd)]['user'][key] = value
+                print(f'Данные пользователя {message.from_user.id} успешно изменены')
                 await bot.send_message(message.chat.id,
                                        'Изменения сохранены')
     
@@ -42,6 +43,7 @@ async def admin(bot: Bot, message: types.Message, users_: dict):
                     else:
                         value = bool(value)
                     users_[str(idd)]['frog']['items'][key1][key2] = value
+                print(f'Данные пользователя {message.from_user.id} успешно изменены')
                 await bot.send_message(message.chat.id,
                                        'Изменения сохранены')
             save_to_json('users/users', users_)
