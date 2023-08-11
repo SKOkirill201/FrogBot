@@ -1,0 +1,38 @@
+{
+    "have_frog": false,
+    "frog": {
+        "frog_name": "Лягушка",
+        "frog_satiety": 10,
+        "frog_happines_level": 100,
+        "is_alive": true,
+        "frog_on_work": false,
+        "frog_in_jail": false,
+        "has_been_thief": false,
+        "has_been_in_jail": false,
+        "can_be_cop_after_thief": true,
+        "rank": 1,
+        "items": {
+            "lucky_coin": {
+                "player_has": false,
+                "level": 1
+            },
+            "golden_gloves": {
+                "player_has": false,
+                "level": 1
+            },
+            "magic_diamond": {
+                "player_has": false,
+                "level": 1
+            }
+        }
+    },
+    "user": {
+        "money": 50,
+        "food": {
+            "spiders": 3,
+            "ants": 10,
+            "bugs": 5
+        },
+        "first_aid_kits": 3
+    }
+}

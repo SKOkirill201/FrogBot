@@ -1,0 +1,192 @@
+{
+    "2006262756": {
+        "have_frog": true,
+        "frog": {
+            "frog_name": "Creator's \u041b\u044f\u0433\u0443\u0448\u043a\u0430",
+            "frog_satiety": 1,
+            "frog_happines_level": 100,
+            "is_alive": true,
+            "frog_on_work": false,
+            "frog_in_jail": false,
+            "has_been_thief": true,
+            "has_been_in_jail": true,
+            "can_be_cop_after_thief": false,
+            "rank": 8,
+            "items": {
+                "lucky_coin": {
+                    "player_has": false,
+                    "level": 3
+                },
+                "golden_gloves": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "magic_diamond": {
+                    "player_has": true,
+                    "level": 1
+                }
+            }
+        },
+        "user": {
+            "money": 910345,
+            "food": {
+                "spiders": 94,
+                "ants": 91,
+                "bugs": 94
+            },
+            "first_aid_kits": 0
+        }
+    },
+    "6232887148": {
+        "have_frog": true,
+        "frog": {
+            "frog_name": "\u0428\u0430\u0441\u0442\ud83d\udd87",
+            "frog_satiety": 8,
+            "frog_happines_level": 100,
+            "is_alive": true,
+            "frog_on_work": false,
+            "frog_in_jail": false,
+            "has_been_thief": true,
+            "has_been_in_jail": true,
+            "can_be_cop_after_thief": false,
+            "rank": 1,
+            "items": {
+                "lucky_coin": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "golden_gloves": {
+                    "player_has": true,
+                    "level": 1
+                },
+                "magic_diamond": {
+                    "player_has": true,
+                    "level": 1
+                }
+            }
+        },
+        "user": {
+            "money": 1000000,
+            "food": {
+                "spiders": 10,
+                "ants": 10,
+                "bugs": 4
+            },
+            "first_aid_kits": 3
+        }
+    },
+    "5191032044": {
+        "have_frog": true,
+        "frog": {
+            "frog_name": "\u042b\u044b\u044b",
+            "frog_satiety": 8,
+            "frog_happines_level": 100,
+            "is_alive": true,
+            "frog_on_work": false,
+            "frog_in_jail": false,
+            "has_been_thief": true,
+            "has_been_in_jail": true,
+            "can_be_cop_after_thief": false,
+            "rank": 1,
+            "items": {
+                "lucky_coin": {
+                    "player_has": true,
+                    "level": 1
+                },
+                "golden_gloves": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "magic_diamond": {
+                    "player_has": false,
+                    "level": 1
+                }
+            }
+        },
+        "user": {
+            "money": 999141,
+            "food": {
+                "spiders": 2,
+                "ants": 10,
+                "bugs": 5
+            },
+            "first_aid_kits": 3
+        }
+    },
+    "6034767487": {
+        "have_frog": true,
+        "frog": {
+            "frog_name": null,
+            "frog_satiety": 10,
+            "frog_happines_level": 100,
+            "is_alive": true,
+            "frog_on_work": false,
+            "frog_in_jail": false,
+            "has_been_thief": false,
+            "has_been_in_jail": false,
+            "can_be_cop_after_thief": false,
+            "rank": 1,
+            "items": {
+                "lucky_coin": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "golden_gloves": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "magic_diamond": {
+                    "player_has": false,
+                    "level": 1
+                }
+            }
+        },
+        "user": {
+            "money": 1000000,
+            "food": {
+                "spiders": 3,
+                "ants": 10,
+                "bugs": 5
+            },
+            "first_aid_kits": 3
+        }
+    },
+    "5132577606": {
+        "have_frog": true,
+        "frog": {
+            "frog_name": "\u041b\u044f\u0433\u0443\u0448\u043a\u0430",
+            "frog_satiety": 10,
+            "frog_happines_level": 100,
+            "is_alive": true,
+            "frog_on_work": false,
+            "frog_in_jail": false,
+            "has_been_thief": false,
+            "has_been_in_jail": false,
+            "can_be_cop_after_thief": false,
+            "rank": 1,
+            "items": {
+                "lucky_coin": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "golden_gloves": {
+                    "has_golden_gloves": false,
+                    "level": 1
+                },
+                "magic_diamond": {
+                    "player_has": false,
+                    "level": 1
+                }
+            }
+        },
+        "user": {
+            "money": 100,
+            "food": {
+                "spiders": 4,
+                "ants": 10,
+                "bugs": 5
+            },
+            "first_aid_kits": 3
+        }
+    }
+}
