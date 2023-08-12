@@ -56,3 +56,49 @@ async def main(bot: Bot, message: types.Message, users_: dict):
             bot.send_message(message.chat.id, 
                              'У вас нету аптечек!',
                              message_thread_id=message.message_thread_id)
+
+    elif str(message.text).lower().split()[0] in all_commands['send_money']:
+        if len(str(message.text).lower().split()) == 2:
+            msgrtmsg = message.reply_to_message
+
+            send = int(''.join(str(message.text).lower().split().pop(1)))
+
+            if msgrtmsg:
+                if users_[str(message.from_user.id)]['user']['money'] >= send:
+                    users_[str(message.from_user.id)]['user']['money'] -= send
+                    users_[str(msgrtmsg.from_user.id)]['user']['money'] += send
+                    try:
+                        await bot.send_message(message.chat.id, 
+                                               'Вы успешно отправили коины 💳',
+                                               message_thread_id=message.message_thread_id)
+                    except Exception as e:
+                        print(e)
+                        await bot.send_message(message.chat.id, 
+                                               'Вы успешно отправили коины 💳')
+                else:
+                    try:
+                        await bot.send_message(message.chat.id, 
+                                               'Недостаточно средств для совершения операции перевода 💸',
+                                               message_thread_id=message.message_thread_id)
+                    except Exception as e:
+                        print(e)
+                        await bot.send_message(message.chat.id, 
+                                               'Недостаточно средств для совершения операции перевода 💸')
+            else:
+                try:
+                    await bot.send_message(message.chat.id, 
+                                           'Для того, чтобы отправить коины, вам нужно написать сообщение ввиде ответа на сообщение пользователя, которому вы хотите перевести коины 💰',\
+                                           message_thread_id=message.message_thread_id)
+                except Exception as e:
+                    print(e)
+                    await bot.send_message(message.chat.id, 
+                                           'Для того, чтобы отправить коины, вам нужно написать сообщение ввиде ответа на сообщение пользователя, которому вы хотите перевести коины 💰')
+        else:
+            try:
+                await bot.send_message(message.chat.id, 
+                                       'Введите сумму коинов после команды',
+                                       message_thread_id=message.message_thread_id)
+            except Exception as e:
+                print(e)
+                await bot.send_message(message.chat.id, 
+                                       'Введите сумму коинов после команды')

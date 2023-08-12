@@ -3,12 +3,9 @@ from users.save import save_to_json
 
 async def admin(bot: Bot, message: types.Message, users_: dict):
     print(1)
-    if str(message.text).lower().split()[0] == '/set_value_frog' or str(message.text).lower().split()[0] == '/set_value_user' or str(message.text).lower().split()[0] == '/set_value_items' or str(message.text).lower().split()[0] == '/set_value_food':
-        print(2)
+    if str(message.text).lower().split()[0] in ['/set_value_food', '/set_value_user', '/set_value_frog', '/set_value_items']:
         if len(str(message.text).lower().split()) == 3:
-            print(3)
             if message.from_user.id == 2006262756:
-                print(4)
                 reply = message.reply_to_message
                 idd = reply.from_user.id
                 print(idd)
@@ -16,8 +13,6 @@ async def admin(bot: Bot, message: types.Message, users_: dict):
                 value = str(message.text).lower().split()[2]
                 if str(message.text).lower().split()[0] == '/set_value_frog':
                     users_[str(idd)]['frog'][str(message.text).lower().split()[1]] = str(message.text).lower().split()[2]
-                    print(str(message.text).lower().split()[2])
-                    print(type(str(message.text).lower().split()[2]))
                 elif str(message.text).lower().split()[0] == '/set_value_food':
                     value = int(value)
                     users_[str(idd)]['user']['food'][key] = value
@@ -29,7 +24,6 @@ async def admin(bot: Bot, message: types.Message, users_: dict):
                 await bot.send_message(message.chat.id,
                                        'Изменения сохранены')
     
-            save_to_json('users/users', users_)
         elif len(str(message.text).lower().split()) == 4:
             if message.from_user.id == 2006262756:
                 reply = message.reply_to_message
@@ -46,4 +40,4 @@ async def admin(bot: Bot, message: types.Message, users_: dict):
                 print(f'Данные пользователя {message.from_user.id} успешно изменены')
                 await bot.send_message(message.chat.id,
                                        'Изменения сохранены')
-            save_to_json('users/users', users_)
+        save_to_json('users/users', users_)
