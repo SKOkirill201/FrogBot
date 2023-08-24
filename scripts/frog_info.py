@@ -9,17 +9,7 @@ async def frog_info_commands(bot: Bot, message: types.Message, users_: dict, con
                 user_frog = f'Ваша лягушка'
             else:
                 user_frog = f'Лягушка пользователя <a href="t.me/{message.from_user.username}">{message.from_user.username}</a>'
-            ranks_values = {
-                '1': 'Деревянный',
-                '2': 'Каменный',
-                '3': 'Медный',
-                '4': 'Бронзовый',
-                '5': 'Железный',
-                '6': 'Золотой',
-                '7': 'Алмазный',
-                '8': 'Бриллиантовый',
-                '9': 'Премиум ⭐'
-            }
+            ranks_values = config['ranks_values']
             
             text1 = '\n🧵 Предметы'
             items = f''''''

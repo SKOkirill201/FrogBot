@@ -32,4 +32,4 @@ async def fb_ff(callback: types.CallbackQuery, bot: Bot, users_, satiety, script
             await bot.send_message(callback.message.chat.id, f'У вас нету ни одного {out_of} {emoji}!',
                                    message_thread_id=callback.message.message_thread_id)
 
-    save_to_json('users/users', users_)
+    save_to_json('users/users.json', users_)

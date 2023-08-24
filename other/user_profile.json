@@ -23,6 +23,26 @@
             "magic_diamond": {
                 "player_has": false,
                 "level": 1
+            },
+            "tasty_donut": {
+                "player_has": false,
+                "level": 1
+            },
+            "big_broom": {
+                "player_has": false,
+                "level": 1
+            },
+            "recipes_book": {
+                "player_has": false,
+                "level": 1
+            },
+            "boots_of_speed": {
+                "player_has": false,
+                "level": 1
+            },
+            "big_knife": {
+                "player_has": false,
+                "level": 1
             }
         }
     },

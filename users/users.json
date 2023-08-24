@@ -3,7 +3,7 @@
         "have_frog": true,
         "frog": {
             "frog_name": "Creator's \u041b\u044f\u0433\u0443\u0448\u043a\u0430",
-            "frog_satiety": 1,
+            "frog_satiety": 4,
             "frog_happines_level": 100,
             "is_alive": true,
             "frog_on_work": false,
@@ -11,7 +11,7 @@
             "has_been_thief": true,
             "has_been_in_jail": true,
             "can_be_cop_after_thief": false,
-            "rank": 8,
+            "rank": 1,
             "items": {
                 "lucky_coin": {
                     "player_has": false,
@@ -22,19 +22,39 @@
                     "level": 1
                 },
                 "magic_diamond": {
-                    "player_has": true,
+                    "player_has": false,
+                    "level": 1
+                },
+                "tasty_donut": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "big_broom": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "recipes_book": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "boots_of_speed": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "big_knife": {
+                    "player_has": false,
                     "level": 1
                 }
             }
         },
         "user": {
-            "money": 910345,
+            "money": 912780,
             "food": {
-                "spiders": 94,
-                "ants": 91,
-                "bugs": 94
+                "spiders": 92,
+                "ants": 88,
+                "bugs": 92
             },
-            "first_aid_kits": 0
+            "first_aid_kits": 7
         }
     },
     "6232887148": {
@@ -62,11 +82,31 @@
                 "magic_diamond": {
                     "player_has": true,
                     "level": 1
+                },
+                "tasty_donut": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "big_broom": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "recipes_book": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "boots_of_speed": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "big_knife": {
+                    "player_has": false,
+                    "level": 1
                 }
             }
         },
         "user": {
-            "money": 1000000,
+            "money": 1000100,
             "food": {
                 "spiders": 10,
                 "ants": 10,
@@ -98,6 +138,26 @@
                     "level": 1
                 },
                 "magic_diamond": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "tasty_donut": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "big_broom": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "recipes_book": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "boots_of_speed": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "big_knife": {
                     "player_has": false,
                     "level": 1
                 }
@@ -138,6 +198,26 @@
                 "magic_diamond": {
                     "player_has": false,
                     "level": 1
+                },
+                "tasty_donut": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "big_broom": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "recipes_book": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "boots_of_speed": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "big_knife": {
+                    "player_has": false,
+                    "level": 1
                 }
             }
         },
@@ -170,10 +250,30 @@
                     "level": 1
                 },
                 "golden_gloves": {
-                    "has_golden_gloves": false,
+                    "player_has": false,
                     "level": 1
                 },
                 "magic_diamond": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "tasty_donut": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "big_broom": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "recipes_book": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "boots_of_speed": {
+                    "player_has": false,
+                    "level": 1
+                },
+                "big_knife": {
                     "player_has": false,
                     "level": 1
                 }
