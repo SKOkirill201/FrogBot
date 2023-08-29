@@ -3,7 +3,7 @@
         "have_frog": true,
         "frog": {
             "frog_name": "Creator's \u041b\u044f\u0433\u0443\u0448\u043a\u0430",
-            "frog_satiety": 4,
+            "frog_satiety": 2,
             "frog_happines_level": 100,
             "is_alive": true,
             "frog_on_work": false,
@@ -14,7 +14,7 @@
             "rank": 1,
             "items": {
                 "lucky_coin": {
-                    "player_has": false,
+                    "player_has": true,
                     "level": 3
                 },
                 "golden_gloves": {
@@ -48,7 +48,7 @@
             }
         },
         "user": {
-            "money": 912780,
+            "money": 912999,
             "food": {
                 "spiders": 92,
                 "ants": 88,

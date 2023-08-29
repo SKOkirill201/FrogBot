@@ -137,3 +137,17 @@ async def main(bot: Bot, message: types.Message, users_: dict):
         await bot.send_message(message.chat.id, 
                      'Что вы хотите улучшить?', 
                      reply_markup=markup)
+
+    if str(message.text).lower() in all_commands['upgrade']:
+        markup = KMarkup(row_width=2)
+
+        rank = Button(text='🎖 Ранг', callback_data='fb_u_rank')
+        item = Button(text='🧵 Предмет', callback_data='fb_u_item')
+
+        markup.insert(rank)
+        markup.insert(item)
+
+        await bot.send_message(message.chat.id, 
+                         'Вы хотите улучшить что-то, но что?', 
+                         reply_markup=markup,
+                         message_thread_id=message.message_thread_id)

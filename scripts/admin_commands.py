@@ -2,7 +2,7 @@ from aiogram import Bot, types
 from users.save import save_to_json
 
 async def admin(bot: Bot, message: types.Message, users_: dict, config: dict):
-    if str(message.text).lower().split()[0] in ['/set_value_food', '/set_value_user', '/set_value_frog', '/set_value_items']:
+    if str(message.text).lower().split()[0] in ['/set_value_food', '/set_value_user', '/set_value_frog', '/set_value_items', '/version_info']:
         if len(str(message.text).lower().split()) == 3:
             if message.from_user.id in config['admins']:
                 reply = message.reply_to_message
@@ -46,5 +46,16 @@ async def admin(bot: Bot, message: types.Message, users_: dict, config: dict):
                 print(f'Данные пользователя {message.from_user.id} успешно изменены')
                 await bot.send_message(message.chat.id,
                                        'Изменения сохранены')
+        
+        elif message.text.lower() == '/version_info':
+            if message.from_user.id in config['admins']:
+                await bot.send_message(message.chat.id,
+                                       f'''Информация о версии frog2bot'а:
+Версия: {config['bot_info']['version']}
+Название коммита: {config['bot_info']['commit_name']}
+Релизная версия? {config['bot_info']['release']}
+Версия протестирована? {config['bot_info']['tested']}
+''',
+                                       message_thread_id=message.message_thread_id)
         
         save_to_json('users/users.json', users_)

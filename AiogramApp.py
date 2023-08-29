@@ -43,7 +43,7 @@ async def messages(message: types.Message):
     await main(bot, message, users_)
     await work(bot, message, users_, config)
     await frog_info_commands(bot, message, users_, config)
-    await admin(bot, message, users_)
+    await admin(bot, message, users_, config)
 
     save_to_json('users/users.json', users_)
     save_to_json('other/chats.json', chats)
@@ -124,11 +124,9 @@ async def office_worker(callback: types.CallbackQuery):
  - 💵 {add} коинов'''
                     if users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['player_has'] == True or users_[str(callback.from_user.id)]['frog']['rank'] != 1:
                         text += '\nБонусы:'
-                    for item in config['items_l']:
-                        if users_[str(callback.from_user.id)]['frog']['items'][item]['player_has'] == True:
-                            item_name = config['items_m'][item]
-                            text += f'\n - 💵 {addd} коинов {item_name}'
-                    if users_[str(callback.from_user.id)]['frog']['rank'] != 1:
+                    if addd != 0:
+                        text += f'\n - 💵 {addd} коинов (Предметы)'
+                    if add_r != 0:
                         text += f'\n - 💵 {add_r} коинов (Ранг)'
 
                 elif result == 'error':
@@ -161,87 +159,70 @@ async def office_worker(callback: types.CallbackQuery):
 
 @dp.callback_query_handler(text = 'fb_w_thief')
 async def robber(callback: types.CallbackQuery):
-    message = callback.message
-    if users_[str(callback.from_user.id)]['frog']['rank'] >= 2:
-        if users_[str(callback.from_user.id)]['frog']['frog_on_work'] == False:
-            if users_[str(callback.from_user.id)]['frog']['frog_satiety'] >= 1:
-                if users_[str(callback.from_user.id)]['frog']['frog_in_jail'] == False:
-                    users_[str(callback.from_user.id)]['frog']['has_been_thief'] = True
-                    print(f'Пользователь {callback.from_user.id} отправил лягушку на работу грабителем')
-                    await bot.send_message(message.chat.id,
-                                     '''🔑 Вы успешно отправили вашу лягушку на работу грабителем! Вы сошли с ума?! Она же может попасть в тюрьму!
+    async def work(message: types.Message, bot: Bot, users_: dict, config: dict):
+        if users_[str(callback.from_user.id)]['frog']['frog_in_jail'] == False:
+            users_[str(callback.from_user.id)]['frog']['has_been_thief'] = True
+            print(f'Пользователь {callback.from_user.id} отправил лягушку на работу грабителем')
+            await bot.send_message(message.chat.id,
+                             '''🔑 Вы успешно отправили вашу лягушку на работу грабителем! Вы сошли с ума?! Она же может попасть в тюрьму!
 
 🕔 Сообщение о результате ограбления придёт через 3 минуты.''',
                                  message_thread_id=message.message_thread_id)
                     
-                    users_[str(callback.from_user.id)]['frog']['frog_on_work'] = True
-                    if users_[str(callback.from_user.id)]['frog']['items']['golden_gloves'] == False:
-                        results = ('successful', 'successful', 'successful', 'cops', 'cops', 'cops', 'cops', 'cops', 'cops', 'cops')
-                    else:
-                        results = ('successful', 'successful', 'successful', 'successful', 'successful', 'successful', 'successful', 'cops', 'cops', 'cops')
-                    result = choice(results)
-                    await sleep(180)
-                    users_[str(callback.from_user.id)]['frog']['frog_satiety'] -= 1
-                    if result == 'successful':
-                        what_frog_robbed = choice(('аптеку', 'аптеку', 'аптеку', 'музей', 'музей', 'музей', 'дом', 'дом', 'дом', 'дом', 'банк'))
-                        if what_frog_robbed == 'аптеку': add = randint(225, 290)
-                        if what_frog_robbed == 'дом': add = randint(150, 375)
-                        if what_frog_robbed == 'банк': add = randint(375, 500)
-                        if what_frog_robbed == 'музей': add = randint(475, 550)
-                        print(f'Лягушка пользователя {callback.from_user.id} успешно ограбила {what_frog_robbed}')
+            users_[str(callback.from_user.id)]['frog']['frog_on_work'] = True
+            if users_[str(callback.from_user.id)]['frog']['items']['golden_gloves'] == False:
+                results = ('successful', 'successful', 'successful', 'cops', 'cops', 'cops', 'cops', 'cops', 'cops', 'cops')
+            else:
+                results = ('successful', 'successful', 'successful', 'successful', 'successful', 'successful', 'successful', 'cops', 'cops', 'cops')
+            result = choice(results)
+            await sleep(180)
+            users_[str(callback.from_user.id)]['frog']['frog_satiety'] -= 1
+            if result == 'successful':
+                what_frog_robbed = choice(('аптеку', 'аптеку', 'аптеку', 'музей', 'музей', 'музей', 'дом', 'дом', 'дом', 'дом', 'банк'))
+                if what_frog_robbed == 'аптеку': add = randint(225, 290)
+                if what_frog_robbed == 'дом': add = randint(150, 375)
+                if what_frog_robbed == 'банк': add = randint(375, 500)
+                if what_frog_robbed == 'музей': add = randint(475, 550)
+                print(f'Лягушка пользователя {callback.from_user.id} успешно ограбила {what_frog_robbed}')
 
-                        if users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['player_has'] == True:
-                            addd = add * config['items_i']['lucky_coin'][str(users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['level'])]
-                            addd -= add
-                            addd = round(addd)
-                            users_[str(callback.from_user.id)]['user']['money'] += addd
-                        if users_[str(callback.from_user.id)]['frog']['items']['magic_diamond']['player_has'] == True:
-                            addd = add * config['items_i']['magic_diamond'][str(users_[str(callback.from_user.id)]['frog']['items']['magic_diamond']['level'])]
-                            addd -= add
-                            addd = round(addd)
-                            users_[str(callback.from_user.id)]['user']['money'] += addd
-
-                        if users_[str(callback.from_user.id)]['frog']['rank'] != 1:
-                            add_r = add * int(round(config['rank_multiplier'][str(users_[str(callback.from_user.id)]['frog']['rank'])]))
-                            users_[str(callback.from_user.id)]['user']['money'] += add_r
-                        users_[str(callback.from_user.id)]['user']['money'] += add
-                        text = f'''Ваша лягушка успешно ограбила {what_frog_robbed}.
+                if users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['player_has'] == True:
+                    addd = add * config['items_i']['lucky_coin'][str(users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['level'])]
+                    addd -= add
+                    addd = round(addd)
+                    users_[str(callback.from_user.id)]['user']['money'] += addd
+                if users_[str(callback.from_user.id)]['frog']['items']['magic_diamond']['player_has'] == True:
+                    addd = add * config['items_i']['magic_diamond'][str(users_[str(callback.from_user.id)]['frog']['items']['magic_diamond']['level'])]
+                    addd -= add
+                    addd = round(addd)
+                    users_[str(callback.from_user.id)]['user']['money'] += addd
+                if users_[str(callback.from_user.id)]['frog']['rank'] != 1:
+                    add_r = add * int(round(config['rank_multiplier'][str(users_[str(callback.from_user.id)]['frog']['rank'])]))
+                    users_[str(callback.from_user.id)]['user']['money'] += add_r
+                users_[str(callback.from_user.id)]['user']['money'] += add
+                text = f'''Ваша лягушка успешно ограбила {what_frog_robbed}.
 Вы получили:
  - 💵 {add} коинов'''
-                        for item in config['items_l']:
-                            if users_[str(callback.from_user.id)]['frog']['items'][item]['player_has'] == True:
-                                item_name = config['items_m'][item]
-                                text += f'\n - 💵 {addd} коинов {item_name}'
-                        if users_[str(callback.from_user.id)]['frog']['rank'] != 1:
-                            text += f'\n - 💵 {add_r} коинов (Ранг)'
+                if addd != 0:
+                    text += f'\n - 💵 {addd} коинов (Предметы)'
+                if add_r != 0:
+                    text += f'\n - 💵 {add_r} коинов (Ранг)'
 
-                    elif result == 'cops':
-                        users_[str(callback.from_user.id)]['frog']['frog_in_jail'] = True
-                        users_[str(callback.from_user.id)]['frog']['has_been_in_jail'] = True
-                        users_[str(callback.from_user.id)]['frog']['can_be_cop_after_thief'] = False
-                        print(f'Лягушка пользователя {callback.from_user.id} попалась полиции')
-                        text = 'О нет! Ваша лягушка попалась полиции и её посадили в тюрьму! 😱'
-
-                    users_[str(callback.from_user.id)]['frog']['frog_on_work'] = False
-                    await bot.send_message(message.chat.id, 
-                                     text,
-                                     message_thread_id=message.message_thread_id)
-                else:
-                    await bot.send_message(message.chat.id, 
-                                     'Ваша лягушка должна быть на свободе, а не в тюрьме 🔒!',
-                                     message_thread_id=message.message_thread_id)
-            else:
+                elif result == 'cops':
+                    users_[str(callback.from_user.id)]['frog']['frog_in_jail'] = True
+                    users_[str(callback.from_user.id)]['frog']['has_been_in_jail'] = True
+                    users_[str(callback.from_user.id)]['frog']['can_be_cop_after_thief'] = False
+                    print(f'Лягушка пользователя {callback.from_user.id} попалась полиции')
+                    text = 'О нет! Ваша лягушка попалась полиции и её посадили в тюрьму! 😱'
+                users_[str(callback.from_user.id)]['frog']['frog_on_work'] = False
                 await bot.send_message(message.chat.id, 
-                                 'Ваша лягушка не может работать пока голодна 🦴!',
+                                 text,
                                  message_thread_id=message.message_thread_id)
         else:
             await bot.send_message(message.chat.id, 
-                             'Ваша лягушка уже на работе!',
+                             'Ваша лягушка должна быть на свободе, а не в тюрьме 🔒!',
                              message_thread_id=message.message_thread_id)
-    else:
-        await bot.send_message(message.chat.id,
-                               'Для отправки лягушку на работу грабителем нужен минимум каменный (2) ранг!',
-                               message_thread_id=message.message_thread_id)
+        
+    await work_template(bot, callback, work, users_, 0, config)
 
 @dp.callback_query_handler(text = 'fb_w_cleaner')
 async def cleaner(callback: types.CallbackQuery):
@@ -296,193 +277,173 @@ async def cleaner(callback: types.CallbackQuery):
 @dp.callback_query_handler(text = 'fb_w_cook')
 async def cook(callback: types.CallbackQuery):
     message = callback.message
-    if users_[str(callback.from_user.id)]['frog']['rank'] >= 2:
-        if users_[str(callback.from_user.id)]['frog']['frog_on_work'] == False:
-            if users_[str(callback.from_user.id)]['frog']['frog_satiety'] >= 1:
-                if users_[str(callback.from_user.id)]['frog']['frog_in_jail'] == False:
-                    print(f'Пользователь {message.from_user.id} отправил лягушку на работу поваром')
-                    await bot.send_message(message.chat.id, '''Вы успешно отправили вашу лягушку на работу поваром 👨‍🍳!
+    async def work(message: types.Message, bot: Bot, users_: dict, config: dict):
+        if users_[str(callback.from_user.id)]['frog']['frog_in_jail'] == False:
+            print(f'Пользователь {message.from_user.id} отправил лягушку на работу поваром')
+            await bot.send_message(message.chat.id, '''Вы успешно отправили вашу лягушку на работу поваром 👨‍🍳!
 
 🕔 Сообщение о результате рабочего дня придёт через 3 минуты.''',
                                            message_thread_id=message.message_thread_id)
                     
-                    users_[str(callback.from_user.id)]['frog']['frog_on_work'] = True
+            users_[str(callback.from_user.id)]['frog']['frog_on_work'] = True
 
-                    await sleep(180)
+            await sleep(180)
 
-                    results = (
-                        'успешно',
-                        'успешно',
-                        'успешно',
-                        'обожглась',
-                        'обожглась',
-                        'недожарилась',
-                        'подгорела',
-                        'сгорела',
-                        'сгорела',
-                        'просрочка'
-                    )
+            results = (
+                'успешно',
+                'успешно',
+                'успешно',
+                'обожглась',
+                'обожглась',
+                'недожарилась',
+                'подгорела',
+                'сгорела',
+                'сгорела',
+                'просрочка'
+            )
 
-                    result = choice(results)
+            result = choice(results)
 
-                    users_[str(callback.from_user.id)]['frog']['frog_satiety'] -= 1
+            users_[str(callback.from_user.id)]['frog']['frog_satiety'] -= 1
 
-                    if result == 'успешно':
-                        print(f'Лягушка пользователя {message.from_user.id} успешно приготовила блюдо')
-                        add = randint(100, 275)
-                        if users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['player_has'] == True:
-                            addd = add * config['items_i']['lucky_coin'][str(users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['level'])]
-                            addd -= add
-                            addd = round(addd)
-                            users_[str(callback.from_user.id)]['user']['money'] += addd
-                            print(addd)
-                        if users_[str(callback.from_user.id)]['frog']['items']['magic_diamond']['player_has'] == True:
-                            addd = add * config['items_i']['magic_diamond'][str(users_[str(callback.from_user.id)]['frog']['items']['magic_diamond']['level'])]
-                            addd -= add
-                            addd = round(addd)
-                            users_[str(callback.from_user.id)]['user']['money'] += addd
-                            print(addd)
+            if result == 'успешно':
+                print(f'Лягушка пользователя {message.from_user.id} успешно приготовила блюдо')
+                add = randint(100, 275)
+                if users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['player_has'] == True:
+                    addd = add * config['items_i']['lucky_coin'][str(users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['level'])]
+                    addd -= add
+                    addd = round(addd)
+                    users_[str(callback.from_user.id)]['user']['money'] += addd
+                    print(addd)
+                if users_[str(callback.from_user.id)]['frog']['items']['magic_diamond']['player_has'] == True:
+                    addd = add * config['items_i']['magic_diamond'][str(users_[str(callback.from_user.id)]['frog']['items']['magic_diamond']['level'])]
+                    addd -= add
+                    addd = round(addd)
+                    users_[str(callback.from_user.id)]['user']['money'] += addd
+                    print(addd)
 
-                        if users_[str(callback.from_user.id)]['frog']['rank'] not in [1, 2]:
-                            rm = int(round(config['rank_multiplier'][str(users_[str(callback.from_user.id)]['frog']['rank']-1)]))
-                            print(rm)
-                            add_r = add * rm
-                            users_[str(callback.from_user.id)]['user']['money'] += add_r
-                        users_[str(callback.from_user.id)]['user']['money'] += add
-                        text = f'''Ваша лягушка успешно приготовила блюдо.
+                if users_[str(callback.from_user.id)]['frog']['rank'] not in [1, 2]:
+                    rm = int(round(config['rank_multiplier'][str(users_[str(callback.from_user.id)]['frog']['rank']-1)]))
+                    print(rm)
+                    add_r = add * rm
+                    users_[str(callback.from_user.id)]['user']['money'] += add_r
+                users_[str(callback.from_user.id)]['user']['money'] += add
+                text = f'''Ваша лягушка успешно приготовила блюдо.
 Вы получили:
  - 💵 {add} коинов'''
-                        for item in config['items_l']:
-                            if users_[str(callback.from_user.id)]['frog']['items'][item]['player_has'] == True:
-                                is_add = True
-                                break
-                        if is_add == True:
-                            item_name = config['items_m'][item]
-                        text += f'\n - 💵 {addd} коинов {item_name}'
-                        if users_[str(callback.from_user.id)]['frog']['rank'] in [1, 2]:
-                            text += f'\n - 💵 {add_r} коинов (Ранг)'
+                if addd != 0:
+                    text += f'\n - 💵 {addd} коинов (Предметы)'
+                if add_r != 0:
+                    text += f'\n - 💵 {add_r} коинов (Ранг)'
                 
-                    elif result == 'недожарилась':
-                        client = choice(['заметил', 'заметил', 'заметил', 'заметил', 'заметил', 'заметил', 'не заметил', 'не заметил', 'не заметил', 'не заметил'])
-                        if client == 'заметил':
-                            print(f'Лягушка пользователя {message.from_user.id} недожарила блюдо и её уволили')
-                            text = 'Ваша лягушка недожарила блюдо, клиент это заметил и её уволили.'
-                        elif client == 'не заметил':
-                            print(f'Лягушка пользователя {message.from_user.id} успешно приготовила блюдо недожаренным, но клиент этого не заметил.')
-                            add = randint(50, 175)
-                            if users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['player_has'] == True:
-                                addd = add * config['items_i']['lucky_coin'][str(users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['level'])]
-                                addd -= add
-                                addd = round(addd)
-                                users_[str(callback.from_user.id)]['user']['money'] += addd
-                            if users_[str(callback.from_user.id)]['frog']['items']['magic_diamond']['player_has'] == True:
-                                addd = add * config['items_i']['magic_diamond'][str(users_[str(callback.from_user.id)]['frog']['items']['magic_diamond']['level'])]
-                                addd -= add
-                                addd = round(addd)
-                                users_[str(callback.from_user.id)]['user']['money'] += addd
+            elif result == 'недожарилась':
+                client = choice(['заметил', 'заметил', 'заметил', 'заметил', 'заметил', 'заметил', 'не заметил', 'не заметил', 'не заметил', 'не заметил'])
+                if client == 'заметил':
+                    print(f'Лягушка пользователя {message.from_user.id} недожарила блюдо и её уволили')
+                    text = 'Ваша лягушка недожарила блюдо, клиент это заметил и её уволили.'
+                elif client == 'не заметил':
+                    print(f'Лягушка пользователя {message.from_user.id} успешно приготовила блюдо недожаренным, но клиент этого не заметил.')
+                    add = randint(50, 175)
+                    if users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['player_has'] == True:
+                        addd = add * config['items_i']['lucky_coin'][str(users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['level'])]
+                        addd -= add
+                        addd = round(addd)
+                        users_[str(callback.from_user.id)]['user']['money'] += addd
+                    if users_[str(callback.from_user.id)]['frog']['items']['magic_diamond']['player_has'] == True:
+                        addd = add * config['items_i']['magic_diamond'][str(users_[str(callback.from_user.id)]['frog']['items']['magic_diamond']['level'])]
+                        addd -= add
+                        addd = round(addd)
+                        users_[str(callback.from_user.id)]['user']['money'] += addd
 
-                            if users_[str(callback.from_user.id)]['frog']['rank'] not in [1, 2]:
-                                rm = int(round(config['rank_multiplier'][str(users_[str(callback.from_user.id)]['frog']['rank']-1)]))
-                                print(rm)
-                                add_r = add * rm
-                                users_[str(callback.from_user.id)]['user']['money'] += add_r
-                            users_[str(callback.from_user.id)]['user']['money'] += add
-                            text = f'''Ваша лягушка недожарила блюдо, клиент этого не заметил, но вам заплатили меньше.
+                    if users_[str(callback.from_user.id)]['frog']['rank'] not in [1, 2]:
+                        rm = int(round(config['rank_multiplier'][str(users_[str(callback.from_user.id)]['frog']['rank']-1)]))
+                        print(rm)
+                        add_r = add * rm
+                        users_[str(callback.from_user.id)]['user']['money'] += add_r
+                    users_[str(callback.from_user.id)]['user']['money'] += add
+                    text = f'''Ваша лягушка недожарила блюдо, клиент этого не заметил, но вам заплатили меньше.
 Вы получили:
  - 💵 {add} коинов'''
-                            if users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['player_has'] == True or users_[str(callback.from_user.id)]['frog']['rank'] != 1 and users_[str(callback.from_user.id)]['frog']['items']['magic_coin']['player_has']:
-                                text += '\nБонусы:'
+                    if users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['player_has'] == True or users_[str(callback.from_user.id)]['frog']['rank'] != 1 and users_[str(callback.from_user.id)]['frog']['items']['magic_coin']['player_has']:
+                        text += '\nБонусы:'
 
-                            for item in config['items_l']:
-                                if users_[str(callback.from_user.id)]['frog']['items'][item]['player_has'] == True:
-                                    is_add = True
-                                    break
-                            if is_add == True:
-                                item_name = config['items_m'][item]
-                            text += f'\n - 💵 {addd} коинов {item_name}'
-                            if users_[str(callback.from_user.id)]['frog']['rank'] in [1, 2]:
-                                text += f'\n - 💵 {add_r} коинов (Ранг)'
+                    for item in config['items_l']:
+                        if users_[str(callback.from_user.id)]['frog']['items'][item]['player_has'] == True:
+                            is_add = True
+                            break
+                    if is_add == True:
+                        item_name = config['items_m'][item]
+                    text += f'\n - 💵 {addd} коинов {item_name}'
+                    if users_[str(callback.from_user.id)]['frog']['rank'] in [1, 2]:
+                        text += f'\n - 💵 {add_r} коинов (Ранг)'
                 
-                    elif result == 'подгорела':
-                        client = choice(['заметил', 'заметил', 'заметил', 'заметил', 'заметил', 'заметил', 'заметил', 'заметил', 'не заметил', 'не заметил'])
-                        if client == 'заметил':
-                            print(f'Лягушка пользователя {message.from_user.id} пережарила блюдо, её уволили.')
-                            text = 'Блюдо вашей лягушки подгорело, клиент это заметил и её уволили'
-                        elif result == 'не заметил':
-                            print(f'Лягушка пользователя {message.from_user.id} приготовила блюдо пережаренным, клиент этого не заметил.')
-                            add = randint(25, 100)
-                            if users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['player_has'] == True:
-                                addd = add * config['items_i']['lucky_coin'][str(users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['level'])]
-                                addd -= add
-                                addd = round(addd)
-                                users_[str(callback.from_user.id)]['user']['money'] += addd
-                            if users_[str(callback.from_user.id)]['frog']['items']['magic_diamond']['player_has'] == True:
-                                addd = add * config['items_i']['magic_diamond'][str(users_[str(callback.from_user.id)]['frog']['items']['magic_diamond']['level'])]
-                                addd -= add
-                                addd = round(addd)
-                                users_[str(callback.from_user.id)]['user']['money'] += addd
+            elif result == 'подгорела':
+                client = choice(['заметил', 'заметил', 'заметил', 'заметил', 'заметил', 'заметил', 'заметил', 'заметил', 'не заметил', 'не заметил'])
+                if client == 'заметил':
+                    print(f'Лягушка пользователя {message.from_user.id} пережарила блюдо, её уволили.')
+                    text = 'Блюдо вашей лягушки подгорело, клиент это заметил и её уволили'
+                elif result == 'не заметил':
+                    print(f'Лягушка пользователя {message.from_user.id} приготовила блюдо пережаренным, клиент этого не заметил.')
+                    add = randint(25, 100)
+                    if users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['player_has'] == True:
+                        addd = add * config['items_i']['lucky_coin'][str(users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['level'])]
+                        addd -= add
+                        addd = round(addd)
+                        users_[str(callback.from_user.id)]['user']['money'] += addd
+                    if users_[str(callback.from_user.id)]['frog']['items']['magic_diamond']['player_has'] == True:
+                        addd = add * config['items_i']['magic_diamond'][str(users_[str(callback.from_user.id)]['frog']['items']['magic_diamond']['level'])]
+                        addd -= add
+                        addd = round(addd)
+                        users_[str(callback.from_user.id)]['user']['money'] += addd
 
-                            if users_[str(callback.from_user.id)]['frog']['rank'] not in [1, 2]:
-                                rm = int(round(config['rank_multiplier'][str(users_[str(callback.from_user.id)]['frog']['rank']-1)]))
-                                print(rm)
-                                add_r = add * rm
-                                users_[str(callback.from_user.id)]['user']['money'] += add_r
-                            users_[str(callback.from_user.id)]['user']['money'] += add
-                            text = f'''У вашей лягушки подгорело блюдо, клиент этого не заметил, но вам заплатили меньше.
+                    if users_[str(callback.from_user.id)]['frog']['rank'] not in [1, 2]:
+                        rm = int(round(config['rank_multiplier'][str(users_[str(callback.from_user.id)]['frog']['rank']-1)]))
+                        print(rm)
+                        add_r = add * rm
+                        users_[str(callback.from_user.id)]['user']['money'] += add_r
+                    users_[str(callback.from_user.id)]['user']['money'] += add
+                    text = f'''У вашей лягушки подгорело блюдо, клиент этого не заметил, но вам заплатили меньше.
 Вы получили:
  - 💵 {add} коинов'''
-                            if users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['player_has'] == True or users_[str(callback.from_user.id)]['frog']['rank'] != 1 and users_[str(callback.from_user.id)]['frog']['items']['magic_coin']['player_has']:
-                                text += '\nБонусы:'
+                    if users_[str(callback.from_user.id)]['frog']['items']['lucky_coin']['player_has'] == True or users_[str(callback.from_user.id)]['frog']['rank'] != 1 and users_[str(callback.from_user.id)]['frog']['items']['magic_coin']['player_has']:
+                        text += '\nБонусы:'
     
-                            for item in config['items_l']:
-                                if users_[str(callback.from_user.id)]['frog']['items'][item]['player_has'] == True:
-                                    is_add = True
-                                    break
-                            if is_add == True:
-                                item_name = config['items_m'][item]
-                            text += f'\n - 💵 {addd} коинов {item_name}'
-                            if users_[str(callback.from_user.id)]['frog']['rank'] != 1:
-                                text += f'\n - 💵 {add_r} коинов (Ранг)'
+                    for item in config['items_l']:
+                        if users_[str(callback.from_user.id)]['frog']['items'][item]['player_has'] == True:
+                            is_add = True
+                            break
+                    if is_add == True:
+                        item_name = config['items_m'][item]
+                    text += f'\n - 💵 {addd} коинов {item_name}'
+                    if users_[str(callback.from_user.id)]['frog']['rank'] != 1:
+                        text += f'\n - 💵 {add_r} коинов (Ранг)'
                 
-                    elif result == 'сгорела':
-                        print(f'Лягушка пользователя {message.from_user.id} сожгла блюдо, её уволили')
-                        text = 'Блюдо вашей лягушки сгорело, её уволили'
+            elif result == 'сгорела':
+                print(f'Лягушка пользователя {message.from_user.id} сожгла блюдо, её уволили')
+                text = 'Блюдо вашей лягушки сгорело, её уволили'
                 
-                    elif result == 'просрочка':
-                        print(f'Лягушка пользователя {message.from_user.id} успешно приготовила блюдо из просрочки, её уволили')
-                        text = 'Ваша лягушка приготовила блюдо из просрочки, её уволили'
+            elif result == 'просрочка':
+                print(f'Лягушка пользователя {message.from_user.id} успешно приготовила блюдо из просрочки, её уволили')
+                text = 'Ваша лягушка приготовила блюдо из просрочки, её уволили'
                     
-                    elif result == 'обожглась':
-                        print(f'Лягушка пользователя {message.from_user.id} обожглась')
-                        users_[str(callback.from_user.id)]['frog']['is_alive'] = False
-                        text = '''Ваша лягушка получила ожог во время готовки! Какой ужас!
+            elif result == 'обожглась':
+                print(f'Лягушка пользователя {message.from_user.id} обожглась')
+                users_[str(callback.from_user.id)]['frog']['is_alive'] = False
+                text = '''Ваша лягушка получила ожог во время готовки! Какой ужас!
 Вы получили:
  - 🔥 Ожог у лягушки (Нужна аптечка)'''
 
-                    users_[str(callback.from_user.id)]['frog']['frog_on_work'] = False
+            users_[str(callback.from_user.id)]['frog']['frog_on_work'] = False
 
-                    await bot.send_message(message.chat.id,
+            await bot.send_message(message.chat.id,
                                      text,
                                      message_thread_id=message.message_thread_id)
-                else:
-                    await bot.send_message(message.chat.id, 
-                                     'Ваша лягушка должна быть на свободе, а не в тюрьме 🔒!',
-                                     message_thread_id=message.message_thread_id)
-
-            else:
-                await bot.send_message(message.chat.id, 
-                                 'Ваша лягушка не может работать пока голодна 🦴!',
-                                 message_thread_id=message.message_thread_id)
-
         else:
             await bot.send_message(message.chat.id, 
-                             'Ваша лягушка уже на работе!',
-                             message_thread_id=message.message_thread_id)            
-
-    else:
-        await bot.send_message(message.chat.id,
-                               'Для отправки лягушку на работу поваром нужен минимум каменный (2) ранг!',
-                               message_thread_id=message.message_thread_id)
+                             'Ваша лягушка должна быть на свободе, а не в тюрьме 🔒!',
+                             message_thread_id=message.message_thread_id)
+    
+    await work_template(bot, callback, work, users_, 0, config)
     
     save_to_json('users/users.json', users_)
 
@@ -555,6 +516,38 @@ async def killer(callback = types.CallbackQuery):
     else:
         await bot.send_message(message.chat.id,
                                'Для отправки лягушку на работу поваром нужен минимум каменный (2) ранг!',
+                               message_thread_id=message.message_thread_id)
+
+@dp.callback_query_handler(text = 'fb_u_rank')
+async def upgrade_rank(callback: types.CallbackQuery):
+    message = callback.message
+    if users_[str(callback.from_user.id)]['frog']['rank'] < 8:
+        cost = {
+            '2': 5000,
+            '3': 7500,
+            '4': 10000,
+            '5': 12500,
+            '6': 15000,
+            '7': 17500,
+            '8': 20000
+        }
+        brank = users_[str(callback.from_user.id)]['frog']['rank'] + 1
+        befrank = users_[str(callback.from_user.id)]['frog']['rank']
+        if users_[str(callback.from_user.id)]['user']['money'] >= cost[str(brank)]:
+            users_[str(callback.from_user.id)]['user']['money'] -= cost[str(brank)]
+            users_[str(callback.from_user.id)]['frog']['rank'] += 1
+            rankn = users_[str(callback.from_user.id)]['frog']['rank']
+            await bot.send_message(message.chat.id,
+                                   f'Вы успешно повысили свой ранг! Ваш прошлый ранг: {config["ranks_values"][str(befrank)]}, ваш текущий ранг: {config["ranks_values"][str(rankn)]}',
+                                   message_thread_id=message.message_thread_id)
+        else:
+            await bot.send_message(message.chat.id,
+                                   f'У вас недостаточно монет! Необходимая сумма: {cost[brank]}.',
+                                   message_thread_id=message.message_thread_id)
+    else:
+        await bot.send_message(message.chat.id,
+                               'У вас максимальный бесплатный ранг\! ||Да, максимальный __бесплатный__ ранг, у нас скоро будет донат 😉||',
+                               parse_mode=types.ParseMode.MARKDOWN_V2,
                                message_thread_id=message.message_thread_id)
 
 if __name__ == '__main__':

@@ -29,20 +29,26 @@ async def work(bot: Bot, message: types.Message, users_: dict, config: dict):
                              message_thread_id=message.message_thread_id)
 
     elif str(message.text).lower() in all_commands['negotiate_with_the_police']:
-        markup = KMarkup(row_width=3)
+        if users_[str(message.from_user.id)]['has_frog'] == False:
+            bot.send_message(message.chat.id,
+                             'У вас нету лягушки!',
+                             message_thread_id=message.message_thread.id)
 
-        coins300 = Button(text='💲 300 Коинов', callback_data='fb_nwtp_300c')
-        coins500 = Button(text='💵 500 Коинов', callback_data='fb_nwtp_500c')
-        coins750 = Button(text='💰 750 коинов', callback_data='fb_nwtp_750c')
-
-        markup.insert(coins300)
-        markup.insert(coins500)
-        markup.insert(coins750)
-
-        await bot.send_message(message.chat.id, 
-                     'Вы решили договориться с полицией насчёт работы вашей лягушки грабителем. Сколько вы заплатите им?',
-                     reply_markup=markup,
-                     message_thread_id=message.message_thread_id)
+        else:
+            markup = KMarkup(row_width=3)
+    
+            coins300 = Button(text='💲 300 Коинов', callback_data='fb_nwtp_300c')
+            coins500 = Button(text='💵 500 Коинов', callback_data='fb_nwtp_500c')
+            coins750 = Button(text='💰 750 коинов', callback_data='fb_nwtp_750c')
+    
+            markup.insert(coins300)
+            markup.insert(coins500)
+            markup.insert(coins750)
+    
+            await bot.send_message(message.chat.id, 
+                         'Вы решили договориться с полицией насчёт работы вашей лягушки грабителем. Сколько вы заплатите им?',
+                         reply_markup=markup,
+                         message_thread_id=message.message_thread_id)
 
     elif str(message.text).lower() in all_commands['send_frog_to_work']:
         if users_[str(message.from_user.id)]['have_frog'] == True:
