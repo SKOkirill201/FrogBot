@@ -54,7 +54,27 @@
                 "ants": 88,
                 "bugs": 92
             },
-            "first_aid_kits": 7
+            "first_aid_kits": 7,
+            "cases": 3,
+            "rare_items": {
+                "ancient_sword": {
+                    "rarity": 0,
+                    "player_have": true
+                },
+                "lucky_potion": {
+                    "rarity": 1,
+                    "player_have": true
+                },
+                "ancient_coin": {
+                    "rarity": 0,
+                    "player_have": false
+                },
+                "have_rare_items": true
+            },
+            "event_items": {
+                "has_event_items": false,
+                "candy_2023": 0
+            }
         }
     },
     "6232887148": {
@@ -112,7 +132,27 @@
                 "ants": 10,
                 "bugs": 4
             },
-            "first_aid_kits": 3
+            "first_aid_kits": 3,
+            "cases": 0,
+            "rare_items": {
+                "ancient_sword": {
+                    "rarity": 0,
+                    "player_have": false
+                },
+                "lucky_potion": {
+                    "rarity": 0,
+                    "player_have": false
+                },
+                "ancient_coin": {
+                    "rarity": 0,
+                    "player_have": false
+                },
+                "have_rare_items": false
+            },
+            "event_items": {
+                "has_event_items": false,
+                "candy_2023": 0
+            }
         }
     },
     "5191032044": {
@@ -170,7 +210,27 @@
                 "ants": 10,
                 "bugs": 5
             },
-            "first_aid_kits": 3
+            "first_aid_kits": 3,
+            "cases": 0,
+            "rare_items": {
+                "ancient_sword": {
+                    "rarity": 0,
+                    "player_have": false
+                },
+                "lucky_potion": {
+                    "rarity": 0,
+                    "player_have": false
+                },
+                "ancient_coin": {
+                    "rarity": 0,
+                    "player_have": false
+                },
+                "have_rare_items": false
+            },
+            "event_items": {
+                "has_event_items": false,
+                "candy_2023": 0
+            }
         }
     },
     "6034767487": {
@@ -228,7 +288,27 @@
                 "ants": 10,
                 "bugs": 5
             },
-            "first_aid_kits": 3
+            "first_aid_kits": 3,
+            "cases": 0,
+            "rare_items": {
+                "ancient_sword": {
+                    "rarity": 0,
+                    "player_have": false
+                },
+                "lucky_potion": {
+                    "rarity": 0,
+                    "player_have": false
+                },
+                "ancient_coin": {
+                    "rarity": 0,
+                    "player_have": false
+                },
+                "have_rare_items": false
+            },
+            "event_items": {
+                "has_event_items": false,
+                "candy_2023": 0
+            }
         }
     },
     "5132577606": {
@@ -286,7 +366,27 @@
                 "ants": 10,
                 "bugs": 5
             },
-            "first_aid_kits": 3
+            "first_aid_kits": 3,
+            "cases": 0,
+            "rare_items": {
+                "ancient_sword": {
+                    "rarity": 0,
+                    "player_have": false
+                },
+                "lucky_potion": {
+                    "rarity": 0,
+                    "player_have": false
+                },
+                "ancient_coin": {
+                    "rarity": 0,
+                    "player_have": false
+                },
+                "have_rare_items": false
+            },
+            "event_items": {
+                "has_event_items": false,
+                "candy_2023": 0
+            }
         }
     }
 }

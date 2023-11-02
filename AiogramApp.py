@@ -7,6 +7,7 @@ from random import choice, randint
 from asyncio import sleep
 from colorama import init, Fore
 import json
+import logging
 
 # Custom scripts imports | Импорты кастомных скриптов
 from users.save import save_to_json
@@ -18,6 +19,7 @@ from scripts.main_commands import *
 from scripts.work_commands import *
 from scripts.admin_commands import *
 from utilities.work import *
+from scripts.cases import *
 
 init(autoreset=True)
 
@@ -44,6 +46,7 @@ async def messages(message: types.Message):
     await work(bot, message, users_, config)
     await frog_info_commands(bot, message, users_, config)
     await admin(bot, message, users_, config)
+    await open_case(bot, message, users_, config)
 
     save_to_json('users/users.json', users_)
     save_to_json('other/chats.json', chats)
