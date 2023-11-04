@@ -20,6 +20,7 @@ from scripts.work_commands import *
 from scripts.admin_commands import *
 from utilities.work import *
 from scripts.cases import *
+from scripts.buy_food import *
 
 init(autoreset=True)
 
@@ -552,6 +553,53 @@ async def upgrade_rank(callback: types.CallbackQuery):
                                'У вас максимальный бесплатный ранг\! ||Да, максимальный __бесплатный__ ранг, у нас скоро будет донат 😉||',
                                parse_mode=types.ParseMode.MARKDOWN_V2,
                                message_thread_id=message.message_thread_id)
+
+@dp.callback_query_handler(text='fb_b_case')
+async def buy_case(callback: types.CallbackQuery):
+    message = callback.message
+    if users_[str(callback.from_user.id)]['user']['event_items']['has_event_items'] == True:
+        if users_[str(callback.from_user.id)]['user']['event_items']['candy_2023'] >= 10:
+            users_[str(callback.from_user.id)]['user']['cases'] += 1
+            users_[str(callback.from_user.id)]['user']['event_items']['candy_2023'] -= 10 
+            await bot.send_message(message.chat.id, 'Вы успешно купили кейс!', message_thread_id=message.message_thread_id)
+        else:
+            await bot.send_message(message.chat.id, 'У вас недостаточно ивентной валюты!', message_thread_id=message.message_thread_id)
+    else:
+        await bot.send_message(message.chat.id, 'У вас нету ивентной валюты', message_thread_id=message.message_thread_id)
+
+    save_to_json('users/users.json', users_)
+
+@dp.callback_query_handler(text='fb_b_food')
+async def buy_food(callback: types.CallbackQuery):
+    markup = KeyboardMarkup(row_width=1)
+
+    spider = Button(text='🕷 Паук', callback_data='fb_b_f_spider')
+    bug = Button(text='🪲 Жук', callback_data='fb_b_f_bug')
+    ant = Button(text='🐜 Муравей', callback_data='fb_b_f_ant')
+
+    markup.add(spider, bug, ant)
+
+    await bot.send_message(callback.message.chat.id, 'Итак, вы решили купить еду лягушке, но какую? 🐜', reply_markup=markup, message_thread_id=callback.message.message_thread_id)
+
+@dp.callback_query_handler(text='fb_b_f_ant')
+async def buy_ant(callback: types.CallbackQuery):
+    await buy_item_template(callback, users_, 'ant', 50, bot)
+    save_to_json('users/users.json', users_)
+
+@dp.callback_query_handler(text='fb_b_f_spider')
+async def buy_spider(callback: types.CallbackQuery):
+    await buy_item_template(callback, users_, 'spider', 150, bot)
+    save_to_json('users/users.json', users_)
+
+@dp.callback_query_handler(text='fb_b_f_bug')
+async def buy_ant(callback: types.CallbackQuery):
+    await buy_item_template(callback, users_, 'bug', 100, bot)
+    save_to_json('users/users.json', users_)
+
+@dp.callback_query_handler(text='fb_b_first_aid_kit')
+async def buy_fak(callback: types.CallbackQuery):
+    await buy_item_template(callback, users_, 'fak', 100, bot)
+    save_to_json('users/users.json', users_)
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)

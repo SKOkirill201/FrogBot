@@ -1,8 +1,8 @@
+import json
+from random import choice, randint
 from aiogram import Bot, types
 from aiogram.types import InlineKeyboardMarkup as KMarkup, InlineKeyboardButton as Button
 from other.commands import all_commands
-from random import choice, randint
-import json
 
 async def work(bot: Bot, message: types.Message, users_: dict, config: dict):
     if str(message.text).lower() in all_commands['buy_frog_out_of_prison']:
@@ -11,7 +11,7 @@ async def work(bot: Bot, message: types.Message, users_: dict, config: dict):
                 if users_[str(message.from_user.id)]['user']['money'] >= 325:
                     users_[str(message.from_user.id)]['frog']['frog_in_jail'] = False
                     users_[str(message.from_user.id)]['user']['money'] -= 325
-                    await bot.send_message(message.chat.id, 
+                    await bot.send_message(message.chat.id,
                                      'Вы успешно выкупили лягушку из тюрьмы 🐸', 
                                      message_thread_id=message.message_thread_id)
                 else:

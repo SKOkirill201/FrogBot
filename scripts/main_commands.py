@@ -151,3 +151,16 @@ async def main(bot: Bot, message: types.Message, users_: dict):
                          'Вы хотите улучшить что-то, но что?', 
                          reply_markup=markup,
                          message_thread_id=message.message_thread_id)
+        
+    elif str(message.text).lower() in all_commands['buy_items']:
+        markup = KMarkup(row_width=2)
+
+        food = Button(text='🥞 Еду', callback_data='fb_b_food')
+        first_aid_kit = Button(text='💊 Аптечки', callback_data='fb_b_first_aid_kit')
+        if users_[str(message.from_user.id)]['user']['event_items']['has_event_items']:
+            case = Button(text='💼 Кейсы', callback_data='fb_b_case')
+            markup.add(case)
+
+        markup.add(first_aid_kit, food)
+
+        await bot.send_message(message.chat.id, 'Вы отправились в магазин предметов, но, что вы хотите купить?', reply_markup=markup)
